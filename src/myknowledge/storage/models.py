@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
     Boolean,
+    DateTime,
     Float,
     ForeignKey,
     Index,
@@ -22,7 +23,7 @@ class Base(DeclarativeBase):
 
 
 def utcnow() -> datetime:
-    return datetime.now(timezone.utc).replace(tzinfo=None)
+    return datetime.now(timezone.utc)
 
 
 def new_uuid() -> uuid.UUID:
@@ -39,8 +40,8 @@ class Project(Base):
     name: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
     description: Mapped[str | None] = mapped_column(Text)
     tech_stack: Mapped[list[str]] = mapped_column(ARRAY(Text), default=list)
-    created_at: Mapped[datetime] = mapped_column(default=utcnow)
-    updated_at: Mapped[datetime] = mapped_column(default=utcnow, onupdate=utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
 
     # Relationships
     memories: Mapped[list["Memory"]] = relationship(back_populates="project", cascade="all, delete")
@@ -66,8 +67,8 @@ class Memory(Base):
     )
     tags: Mapped[list[str]] = mapped_column(ARRAY(Text), default=list)
     source_session_id: Mapped[str | None] = mapped_column(String(255))
-    created_at: Mapped[datetime] = mapped_column(default=utcnow)
-    updated_at: Mapped[datetime] = mapped_column(default=utcnow, onupdate=utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
 
     # Relationships
     project: Mapped[Project | None] = relationship(back_populates="memories")
@@ -97,8 +98,8 @@ class Entity(Base):
     )
     description: Mapped[str | None] = mapped_column(Text)
     metadata_: Mapped[dict] = mapped_column("metadata", JSONB, default=dict)
-    created_at: Mapped[datetime] = mapped_column(default=utcnow)
-    updated_at: Mapped[datetime] = mapped_column(default=utcnow, onupdate=utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
 
     # Relationships
     project: Mapped[Project | None] = relationship(back_populates="entities")
@@ -135,7 +136,7 @@ class Relation(Base):
     relation_type: Mapped[str] = mapped_column(String(50), nullable=False)
     description: Mapped[str | None] = mapped_column(Text)
     metadata_: Mapped[dict] = mapped_column("metadata", JSONB, default=dict)
-    created_at: Mapped[datetime] = mapped_column(default=utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
     # Relationships
     source_entity: Mapped[Entity] = relationship(
@@ -168,7 +169,7 @@ class MemoryEntityLink(Base):
     entity_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("entities.id", ondelete="CASCADE"), nullable=False
     )
-    created_at: Mapped[datetime] = mapped_column(default=utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
     # Relationships
     memory: Mapped[Memory] = relationship(back_populates="entity_links")
@@ -194,8 +195,8 @@ class Conversation(Base):
     )
     raw_content: Mapped[dict] = mapped_column(JSONB, nullable=False)
     processed: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(default=utcnow)
-    processed_at: Mapped[datetime | None] = mapped_column(default=None)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    processed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), default=None)
 
     # Relationships
     project: Mapped[Project | None] = relationship(back_populates="conversations")

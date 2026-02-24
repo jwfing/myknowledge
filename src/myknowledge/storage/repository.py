@@ -137,7 +137,7 @@ class Repository:
     async def update_memory(self, memory: Memory, **kwargs) -> Memory:
         for key, value in kwargs.items():
             setattr(memory, key, value)
-        memory.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
+        memory.updated_at = datetime.now(timezone.utc)
         await self.session.flush()
         return memory
 
@@ -275,5 +275,5 @@ class Repository:
         result = await self.session.execute(stmt)
         conversation = result.scalar_one()
         conversation.processed = True
-        conversation.processed_at = datetime.now(timezone.utc).replace(tzinfo=None)
+        conversation.processed_at = datetime.now(timezone.utc)
         await self.session.flush()

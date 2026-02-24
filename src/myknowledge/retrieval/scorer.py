@@ -17,7 +17,7 @@ def calculate_score(
 
     Where time_decay = e^(-λ × age_days)
     """
-    age_days = (datetime.now(timezone.utc).replace(tzinfo=None) - created_at).total_seconds() / 86400.0
+    age_days = (datetime.now(timezone.utc) - created_at).total_seconds() / 86400.0
     time_decay = math.exp(-settings.TIME_DECAY_LAMBDA * age_days)
 
     score = (
