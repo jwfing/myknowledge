@@ -12,7 +12,7 @@ Claude Code Conversation
        ├─── Stop Hook (auto) ──→ POST /api/v1/ingest ──→ LLM Distillation ──→ Store in DB
        │                           (Background Path)
        └─── remember_this (manual) ──→ Store directly in DB
-              query_memory ←────── Vector Search + Entity Matching + 3-Dimensional Scoring
+              recall_memory ←────── Vector Search + Entity Matching + 3-Dimensional Scoring
               (Hot Path via MCP)
 ```
 
@@ -98,7 +98,7 @@ Once configured, agents in Claude Code can use these three tools:
 
 | Tool | Purpose | Example |
 |------|---------|---------|
-| `query_memory` | Semantic search across cross-project knowledge | "How do I call the OAuth API in the platform project?" |
+| `recall_memory` | Semantic search across cross-project knowledge | "How do I call the OAuth API in the platform project?" |
 | `remember_this` | Proactively save important knowledge | Save key decisions, API designs, etc. |
 | `list_projects` | View all projects and their knowledge summary | Get an overview of all projects |
 
@@ -162,7 +162,7 @@ src/myknowledge/
 │       └── health.py         #   GET /api/v1/health
 │
 ├── mcp/                      # MCP Server (Hot Path, mounted at /mcp)
-│   └── server.py             #   3 tools: remember_this, query_memory, list_projects
+│   └── server.py             #   3 tools: remember_this, recall_memory, list_projects
 │
 ├── extraction/               # Distillation layer
 │   ├── pipeline.py           #   Async distillation pipeline: segmentation → LLM extraction → dedup → storage

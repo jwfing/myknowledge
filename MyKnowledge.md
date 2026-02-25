@@ -37,7 +37,7 @@ Claude Code Hooks: Configure a PostConversation hook in .claude/hooks/ that auto
 Principle: Expose a `remember_this` tool via MCP Server, allowing agents to proactively mark important information during conversations. Memories saved this way receive higher confidence weights.
 MCP Server exposed Tools:
 - **remember_this**: Proactively save a knowledge snippet with classification tags. Trigger: When the agent determines current information has long-term value.
-- **query_memory**: Semantic retrieval of related memories, returning concise results. Trigger: Automatically called when the agent needs cross-project knowledge.
+- **recall_memory**: Semantic retrieval of related memories, returning concise results. Trigger: Automatically called when the agent needs cross-project knowledge.
 - **list_projects**: List all user projects and their knowledge summaries. Trigger: When the agent needs to understand the user's overall project landscape.
 
 ### Distillation Layer

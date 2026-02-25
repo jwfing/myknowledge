@@ -20,7 +20,7 @@ mcp = FastMCP(
     "myknowledge",
     instructions=(
         "Agent Memory service for cross-project knowledge sharing. "
-        "Use `query_memory` to search for relevant knowledge across all projects. "
+        "Use `recall_memory` to search for relevant knowledge across all projects. "
         "Use `remember_this` to save important knowledge for future reference. "
         "Use `list_projects` to see all projects and their knowledge overview."
     ),
@@ -162,11 +162,11 @@ async def remember_this(
         return f"Error saving memory: {str(e)}"
 
 
-# ── Tool 2: query_memory ──
+# ── Tool 2: recall_memory ──
 
 
 @mcp.tool()
-async def query_memory(
+async def recall_memory(
     query: str,
     project_name: str | None = None,
     memory_types: list[str] | None = None,
@@ -184,7 +184,7 @@ async def query_memory(
     """
     limit = max(1, min(5, limit))
     logger.info(
-        "query_memory called: query='%s', project=%s, types=%s, limit=%d",
+        "recall_memory called: query='%s', project=%s, types=%s, limit=%d",
         query[:80], project_name, memory_types, limit,
     )
 
@@ -210,10 +210,10 @@ async def query_memory(
             )
 
         if not result.results:
-            logger.info("query_memory: no results found")
+            logger.info("recall_memory: no results found")
             return "No relevant memories found."
 
-        logger.info("query_memory: found %d results (total_found=%d)", len(result.results), result.total_found)
+        logger.info("recall_memory: found %d results (total_found=%d)", len(result.results), result.total_found)
 
         # Format results for the agent
         lines = [f"Found {result.total_found} relevant memories (showing top {len(result.results)}):\n"]
