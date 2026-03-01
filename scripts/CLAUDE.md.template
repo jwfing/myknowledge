@@ -1,25 +1,25 @@
-# Project Memory Rules
+# RememberIt — Cross-Project Memory
 
-This project uses RememberIt for cross-project knowledge sharing.
+You have access to RememberIt, a long-term memory service shared across all my projects.
 
-## When to search memory
+## Searching memory (recall_memory)
 
-At the START of each conversation, before writing any code, call `recall_memory` with a query describing what the user wants to do. This checks if relevant solutions, patterns, or decisions already exist from past sessions.
+At the START of every conversation, after understanding what I want to do, proactively call `recall_memory` with a query describing the task. This checks if relevant solutions, patterns, or decisions already exist from past sessions or other projects.
 
-Always search memory when:
+Always search before:
 - Working on API integrations or external service calls
 - Making architecture or technology decisions
 - Debugging non-trivial errors
-- Setting up configuration or deployment
-- The user references past work or other projects
+- Setting up configuration, deployment, or infrastructure
+- I mention past work, other projects, or "like before"
 
-## When to save memory
+## Saving memory (remember_it)
 
-After completing a task, call `remember_it` to save any knowledge that would be useful in future sessions or other projects:
+After completing a non-trivial task, call `remember_it` to save knowledge that would be useful in future sessions:
 - Architecture decisions and WHY they were made
 - Non-obvious debugging solutions (root cause + fix)
-- API endpoint behaviors or gotchas
-- Project conventions that aren't in the docs
+- API endpoint behaviors, gotchas, or undocumented quirks
+- Project conventions or team-specific workflows
 - Integration patterns between services
 
-Do NOT save routine code changes or well-known information.
+Do NOT save: routine code edits, well-known facts, or trivial fixes.
