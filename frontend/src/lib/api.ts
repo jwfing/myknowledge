@@ -17,19 +17,19 @@ export const api = {
     memory_type?: string;
     project_id?: string;
     search?: string;
-  }) => fetchJSON("/api/memories", filters),
+  }) => fetchJSON("/api/v1/memories", filters),
 
-  getMemoryStats: () => fetchJSON("/api/memory-stats"),
+  getMemoryStats: () => fetchJSON("/api/v1/memory-stats"),
 
   getEntities: (filters: {
     project_id?: string;
     entity_type?: string;
-  }) => fetchJSON("/api/entities", filters),
+  }) => fetchJSON("/api/v1/entities", filters),
 
-  getRelations: () => fetchJSON("/api/relations"),
+  getRelations: () => fetchJSON("/api/v1/relations"),
 
-  getGraphStats: () => fetchJSON("/api/graph-stats"),
+  getGraphStats: () => fetchJSON("/api/v1/graph-stats"),
 
   getEntityMemories: (entityId: string) =>
-    fetchJSON(`/api/entity-memories/${entityId}`),
+    fetchJSON(`/api/v1/entity-memories/${entityId}`),
 };

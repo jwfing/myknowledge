@@ -4,7 +4,9 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+from rememberit.api.routes.dashboard import router as dashboard_router
 from rememberit.api.routes.health import router as health_router
 from rememberit.api.routes.ingest import router as ingest_router
 from rememberit.config import settings
@@ -40,8 +42,16 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
     app.include_router(health_router, prefix=settings.API_PREFIX)
     app.include_router(ingest_router, prefix=settings.API_PREFIX)
+    app.include_router(dashboard_router, prefix=settings.API_PREFIX)
 
     # Mount MCP server at /mcp
     app.mount("/mcp", mcp_app)
