@@ -24,6 +24,8 @@ Claude Code Conversation
 |-----------|--------|
 | Backend Framework | Python + FastAPI |
 | MCP Server | Python MCP SDK (streamable HTTP) |
+| Frontend | React + Vite + Tailwind CSS |
+| Frontend API | Express + node-postgres |
 | Database | PostgreSQL + pgvector |
 | Embedding | sentence-transformers (paraphrase-multilingual-mpnet-base-v2, runs locally) |
 | Knowledge Distillation | Claude Haiku 4.5 via OpenRouter |
@@ -32,12 +34,21 @@ Claude Code Conversation
 
 ### 1. Install Dependencies
 
+**Backend:**
+
 ```bash
 cd backend
 pip install -e .
 ```
 
 The embedding model (~400MB) will be automatically downloaded from HuggingFace on first run.
+
+**Frontend:**
+
+```bash
+cd frontend
+npm install
+```
 
 ### 2. Configure Environment Variables
 
@@ -64,7 +75,7 @@ cd backend
 alembic upgrade head
 ```
 
-### 4. Start Server
+### 4. Start Backend Server
 
 ```bash
 cd backend
@@ -72,6 +83,15 @@ python -m rememberit
 ```
 
 This starts a single server on port 6789 with both the REST API (`/api/v1/*`) and MCP endpoint (`/mcp`).
+
+### 5. Start Frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+This starts the Vite dev server (default port 5173) and the Express API server (port 3001). Open `http://localhost:5173` to access the dashboard.
 
 ## Integrating with Claude Code
 
