@@ -3,7 +3,7 @@
 # Install rememberit as a macOS launchd service
 #
 # Usage:
-#   ./scripts/install_service.sh
+#   ./backend/scripts/macOS-service/install_service.sh
 #
 # After installation:
 #   Start:  launchctl load ~/Library/LaunchAgents/dev.jwfing.rememberit.plist
@@ -16,7 +16,7 @@ set -e
 
 # ── Locate project path ──
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 PYTHON_BIN="$(which python3)"
 
 PLIST_DIR="$HOME/Library/LaunchAgents"
@@ -67,7 +67,7 @@ cat > "$PLIST" << PLIST
     <key>EnvironmentVariables</key>
     <dict>
         <key>PYTHONPATH</key>
-        <string>$PROJECT_DIR/src</string>
+        <string>$PROJECT_DIR/backend/src</string>
     </dict>
 
     <key>RunAtLoad</key>
@@ -119,4 +119,4 @@ echo "  Status    launchctl list | grep rememberit"
 echo "  Stop      launchctl unload ~/Library/LaunchAgents/dev.jwfing.rememberit.plist"
 echo "  Restart   launchctl kickstart -k gui/\$(id -u)/dev.jwfing.rememberit"
 echo "  Logs      tail -f ~/Library/Logs/rememberit/server.log"
-echo "  Uninstall ./scripts/macOS-service/uninstall_service.sh"
+echo "  Uninstall ./backend/scripts/macOS-service/uninstall_service.sh"

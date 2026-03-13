@@ -30,3 +30,10 @@ htmlcov/
 
 # mypy
 .mypy_cache/
+
+# ML models cache
+models/
+
+# frontend build
+frontend/dist/
+frontend/node_modules/
